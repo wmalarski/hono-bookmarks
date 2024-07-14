@@ -4,6 +4,11 @@ import adapter from "@hono/vite-dev-server/cloudflare";
 import { defineConfig } from "vite";
 
 export default defineConfig({
+	build: {
+		rollupOptions: {
+			input: "/src/client.tsx",
+		},
+	},
 	plugins: [
 		build(),
 		devServer({
@@ -12,3 +17,46 @@ export default defineConfig({
 		}),
 	],
 });
+
+// export default defineConfig(({ mode }) => {
+// 	if (mode === "client") {
+// 		return {
+// 			build: {
+// 				rollupOptions: {
+// 					input: ["./src/client.tsx"],
+// 					output: {
+// 						entryFileNames: "static/client.js",
+// 						chunkFileNames: "static/assets/[name]-[hash].js",
+// 						assetFileNames: "static/assets/[name].[ext]",
+// 					},
+// 				},
+// 				emptyOutDir: false,
+// 				copyPublicDir: false,
+// 			},
+// 			plugins: [
+// 				build(),
+// 				devServer({
+// 					adapter,
+// 					entry: "src/index.tsx",
+// 				}),
+// 			],
+// 		};
+// 	}
+// 	return {
+// 		build: {
+// 			minify: true,
+// 			rollupOptions: {
+// 				output: {
+// 					entryFileNames: "_worker.js",
+// 				},
+// 			},
+// 		},
+// 		plugins: [
+// 			build(),
+// 			devServer({
+// 				adapter,
+// 				entry: "./src/index.tsx",
+// 			}),
+// 		],
+// 	};
+// });

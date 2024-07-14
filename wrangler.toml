@@ -1,5 +1,6 @@
 name = "hono-bookmarks"
 pages_build_output_dir = "./dist"
+compatibility_date = "2024-07-14"
 
 [vars]
 DB_URL = "<DB_URL>"
@@ -9,8 +10,6 @@ MASTODON_REDIRECT_URL="<MASTODON_REDIRECT_URL>"
 MASTODON_CLIENT_SECRET="<MASTODON_CLIENT_SECRET>"
 MASTODON_REDIRECT_URL2="<MASTODON_REDIRECT_URL2>"
 COOKIE_SECRETS="<COOKIE_SECRETS>"
-
-[env.local.vars]
 MODE="local"
 
 [env.production.vars]

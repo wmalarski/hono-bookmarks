@@ -28,7 +28,7 @@ export const createAuthorizationUrl = async (
 		httpOnly: true,
 		maxAge: 60 * 10, // 10 min
 		path: "/",
-		secure: context.env.MODE === "production",
+		secure: import.meta.env.PROD,
 	};
 
 	setCookie(context, STATE_KEY, state, options);

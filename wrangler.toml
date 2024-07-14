@@ -1,8 +1,20 @@
 name = "hono-bookmarks"
 pages_build_output_dir = "./dist"
 
-# [vars]
-# MY_VAR = "my-variable"
+[vars]
+DB_URL = "<DB_URL>"
+MASTODON_URL = "<MASTODON_URL>"
+MASTODON_CLIENT_ID="<MASTODON_CLIENT_ID>"
+MASTODON_REDIRECT_URL="<MASTODON_REDIRECT_URL>"
+MASTODON_CLIENT_SECRET="<MASTODON_CLIENT_SECRET>"
+MASTODON_REDIRECT_URL2="<MASTODON_REDIRECT_URL2>"
+COOKIE_SECRETS="<COOKIE_SECRETS>"
+
+[env.local.vars]
+MODE="local"
+
+[env.production.vars]
+MODE="production"
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"

@@ -10,13 +10,6 @@ const CODE_KEY = "code";
 const CODE_VERIFIER_KEY = "code_verifier";
 const STATE_KEY = "state";
 
-const COOKIE_OPTIONS: CookieOptions = {
-	httpOnly: true,
-	maxAge: 60 * 10, // 10 min
-	path: "/",
-	secure: import.meta.env.PROD,
-};
-
 export const createAuthorizationUrl = async (
 	context: Context,
 ): Promise<string> => {
@@ -31,8 +24,15 @@ export const createAuthorizationUrl = async (
 		scopes: ["read"],
 	});
 
-	setCookie(context, STATE_KEY, state, COOKIE_OPTIONS);
-	setCookie(context, CODE_VERIFIER_KEY, codeVerifier, COOKIE_OPTIONS);
+	const options: CookieOptions = {
+		httpOnly: true,
+		maxAge: 60 * 10, // 10 min
+		path: "/",
+		secure: context.env.MODE === "production",
+	};
+
+	setCookie(context, STATE_KEY, state, options);
+	setCookie(context, CODE_VERIFIER_KEY, codeVerifier, options);
 
 	return url.toString();
 };

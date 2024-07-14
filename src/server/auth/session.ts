@@ -1,10 +1,10 @@
 import { generateCodeVerifier, generateState, type Tokens } from "arctic";
-import { client, lucia } from "./lucia";
 import { verifyRequestOrigin } from "lucia";
 import { createOAuthAPIClient } from "masto";
 import type { Context } from "hono";
 import { getCookie, setCookie } from "hono/cookie";
 import type { CookieOptions } from "hono/utils/cookie";
+import { getOAuth2Client } from "./lucia";
 
 const CODE_KEY = "code";
 const CODE_VERIFIER_KEY = "code_verifier";
@@ -22,6 +22,8 @@ export const createAuthorizationUrl = async (
 ): Promise<string> => {
 	const state = generateState();
 	const codeVerifier = generateCodeVerifier();
+
+	const client = getOAuth2Client(context);
 
 	const url = await client.createAuthorizationURL({
 		state,
@@ -48,14 +50,14 @@ export const validateAuthorizationCode = async (
 		return Promise.resolve(null);
 	}
 
-	const client = createOAuthAPIClient({ url: import.meta.env.MASTODON_URL });
+	const client = createOAuthAPIClient({ url: context.env.MASTODON_URL });
 
 	return client.token.create({
-		clientId: import.meta.env.MASTODON_CLIENT_ID,
-		clientSecret: import.meta.env.MASTODON_CLIENT_SECRET,
+		clientId: context.env.MASTODON_CLIENT_ID,
+		clientSecret: context.env.MASTODON_CLIENT_SECRET,
 		code,
 		grantType: "authorization_code",
-		redirectUri: import.meta.env.MASTODON_REDIRECT_URL,
+		redirectUri: context.env.MASTODON_REDIRECT_URL,
 	});
 };
 
@@ -64,11 +66,11 @@ export const setSessionCookie = async (
 	userId: string,
 	tokens: Tokens,
 ) => {
-	const session = await lucia.createSession(userId, {
+	const session = await context.var.lucia.createSession(userId, {
 		accessToken: tokens.accessToken,
 	});
 
-	const sessionCookie = lucia.createSessionCookie(session.id);
+	const sessionCookie = context.var.lucia.createSessionCookie(session.id);
 
 	setCookie(
 		context,
@@ -79,7 +81,7 @@ export const setSessionCookie = async (
 };
 
 export const setBlankSessionCookie = (context: Context) => {
-	const sessionCookie = lucia.createBlankSessionCookie();
+	const sessionCookie = context.var.lucia.createBlankSessionCookie();
 
 	setCookie(
 		context,

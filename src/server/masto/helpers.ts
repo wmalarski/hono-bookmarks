@@ -1,9 +1,10 @@
 import { createRestAPIClient } from "masto";
 import type { Tokens } from "arctic";
+import type { Context } from "hono";
 
-export const verifyMastoCredentials = (tokens: Tokens) => {
+export const verifyMastoCredentials = (context: Context, tokens: Tokens) => {
 	const client = createRestAPIClient({
-		url: import.meta.env.MASTODON_URL,
+		url: context.env.MASTODON_URL,
 		accessToken: tokens.accessToken,
 	});
 

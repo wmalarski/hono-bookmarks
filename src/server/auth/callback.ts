@@ -13,9 +13,9 @@ export const handleAuthCallback = async (context: Context) => {
 			throw new HTTPException(400);
 		}
 
-		const mastoUser = await verifyMastoCredentials(tokens);
+		const mastoUser = await verifyMastoCredentials(context, tokens);
 
-		const existingUser = getUserByMastoId(mastoUser.id);
+		const existingUser = getUserByMastoId(context, mastoUser.id);
 
 		if (existingUser) {
 			await setSessionCookie(context, existingUser.id, tokens);
@@ -23,7 +23,7 @@ export const handleAuthCallback = async (context: Context) => {
 			return context.redirect("/");
 		}
 
-		const newUser = insertUser(mastoUser);
+		const newUser = insertUser(context, mastoUser);
 
 		await setSessionCookie(context, newUser.id, tokens);
 

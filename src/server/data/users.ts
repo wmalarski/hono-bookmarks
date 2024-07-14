@@ -1,8 +1,13 @@
-import { db, userTable } from "../db";
 import { eq } from "drizzle-orm";
+import { userTable } from "../db/schema";
+import type { Context } from "hono";
 
-export const getUserByMastoId = (id: string) => {
-	return db.select().from(userTable).where(eq(userTable.id, id)).get();
+export const getUserByMastoId = (context: Context, id: string) => {
+	return context.var.db
+		.select()
+		.from(userTable)
+		.where(eq(userTable.id, id))
+		.get();
 };
 
 type AccountCredentials = {
@@ -10,11 +15,14 @@ type AccountCredentials = {
 	displayName: string;
 };
 
-export const insertUser = (accountCredentials: AccountCredentials) => {
+export const insertUser = (
+	context: Context,
+	accountCredentials: AccountCredentials,
+) => {
 	const values = {
 		id: accountCredentials.id,
 		name: accountCredentials.displayName,
 	};
 
-	return db.insert(userTable).values(values).returning().get();
+	return context.var.db.insert(userTable).values(values).returning().get();
 };

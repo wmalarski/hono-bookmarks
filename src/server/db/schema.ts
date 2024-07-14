@@ -1,10 +1,4 @@
-import sqlite from "better-sqlite3";
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
-import { drizzle } from "drizzle-orm/better-sqlite3";
-
-const sqliteDB = sqlite(import.meta.env.DB_URL);
-
-export const db = drizzle(sqliteDB);
 
 export const userTable = sqliteTable("user", {
 	id: text("id").notNull().primaryKey(),

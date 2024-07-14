@@ -4,9 +4,11 @@ import { createAuthorizationUrl } from "./server/auth/session";
 import { handleAuthCallback } from "./server/auth/callback";
 import { authMiddleware } from "./server/auth/middleware";
 import { Homepage } from "./modules/homepage/Homepage";
+import { drizzleMiddleware } from "./server/db/middleware";
 
 const app = new Hono();
 
+app.use(drizzleMiddleware);
 app.use(authMiddleware);
 app.use(renderer);
 

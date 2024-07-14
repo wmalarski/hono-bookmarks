@@ -1,11 +1,9 @@
 import { generateCodeVerifier, generateState, type Tokens } from "arctic";
-
 import { client, lucia } from "./lucia";
 import { verifyRequestOrigin } from "lucia";
 import { createOAuthAPIClient } from "masto";
-import { UNAUTHORIZED_ERROR } from "../errors";
 import type { Context } from "hono";
-import { setCookie } from "hono/cookie";
+import { getCookie, setCookie } from "hono/cookie";
 import type { CookieOptions } from "hono/utils/cookie";
 
 const CODE_KEY = "code";
@@ -40,11 +38,11 @@ export const createAuthorizationUrl = async (
 export const validateAuthorizationCode = async (
 	context: Context,
 ): Promise<Tokens | null> => {
-	const code = context.url.searchParams.get(CODE_KEY);
-	const state = context.url.searchParams.get(STATE_KEY);
+	const code = context.req.query(CODE_KEY);
+	const state = context.req.query(STATE_KEY);
 
-	const storedState = context.cookies.get(STATE_KEY)?.value;
-	const storedCodeVerifier = context.cookies.get(CODE_VERIFIER_KEY)?.value;
+	const storedState = getCookie(context, STATE_KEY);
+	const storedCodeVerifier = getCookie(context, CODE_VERIFIER_KEY);
 
 	if (!code || !storedState || !storedCodeVerifier || state !== storedState) {
 		return Promise.resolve(null);
@@ -72,7 +70,8 @@ export const setSessionCookie = async (
 
 	const sessionCookie = lucia.createSessionCookie(session.id);
 
-	context.cookies.set(
+	setCookie(
+		context,
 		sessionCookie.name,
 		sessionCookie.value,
 		sessionCookie.attributes,
@@ -82,7 +81,8 @@ export const setSessionCookie = async (
 export const setBlankSessionCookie = (context: Context) => {
 	const sessionCookie = lucia.createBlankSessionCookie();
 
-	context.cookies.set(
+	setCookie(
+		context,
 		sessionCookie.name,
 		sessionCookie.value,
 		sessionCookie.attributes,
@@ -90,49 +90,12 @@ export const setBlankSessionCookie = (context: Context) => {
 };
 
 export const verifyRequest = (context: Context) => {
-	const originHeader = context.request.headers.get("Origin");
-	const hostHeader = context.request.headers.get("Host");
+	const originHeader = context.req.header("Origin");
+	const hostHeader = context.req.header("Host");
 
 	return (
 		originHeader &&
 		hostHeader &&
 		verifyRequestOrigin(originHeader, [hostHeader])
 	);
-};
-
-export const authMiddleware = async (context: Context) => {
-	const sessionId = context.cookies.get(lucia.sessionCookieName)?.value ?? null;
-
-	if (!sessionId) {
-		context.locals.user = null;
-		context.locals.session = null;
-		return;
-	}
-
-	const { session, user } = await lucia.validateSession(sessionId);
-
-	if (session?.fresh) {
-		const sessionCookie = lucia.createSessionCookie(session.id);
-
-		context.cookies.set(
-			sessionCookie.name,
-			sessionCookie.value,
-			sessionCookie.attributes,
-		);
-	}
-
-	if (!session) {
-		setBlankSessionCookie(context);
-	}
-
-	context.locals.session = session;
-	context.locals.user = user;
-};
-
-export const validateContextSession = (context: Context) => {
-	const session = context.locals.session;
-	if (!session) {
-		throw new ActionError(UNAUTHORIZED_ERROR);
-	}
-	return session;
 };

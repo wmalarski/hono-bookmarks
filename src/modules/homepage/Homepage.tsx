@@ -2,7 +2,11 @@ import type { FC } from "hono/jsx";
 import { Navbar } from "./Navbar";
 import { useAuthContext } from "../auth/AuthContext";
 
-export const Homepage: FC = () => {
+type HomepageProps = {
+	showDone: boolean;
+};
+
+export const Homepage: FC<HomepageProps> = () => {
 	const { session, user } = useAuthContext();
 
 	return (

@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@hono/valibot-validator':
+        specifier: ^0.3.0
+        version: 0.3.0(hono@4.4.13)(valibot@0.36.0)
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.0.7
         version: 1.0.7(lucia@3.2.0)
@@ -47,6 +50,9 @@ importers:
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.4
+      valibot:
+        specifier: ^0.36.0
+        version: 0.36.0
     devDependencies:
       '@biomejs/biome':
         specifier: 1.8.3
@@ -745,6 +751,12 @@ packages:
   '@hono/node-server@1.12.0':
     resolution: {integrity: sha512-e6oHjNiErRxsZRZBmc2KucuvY3btlO/XPncIpP2X75bRdTilF9GLjm3NHvKKunpJbbJJj31/FoPTksTf8djAVw==}
     engines: {node: '>=18.14.1'}
+
+  '@hono/valibot-validator@0.3.0':
+    resolution: {integrity: sha512-EcGJKzLt11SK4K11yKHrhI93ECtKeSHAnnENHw5tCL0ZhyDIx96avc3Ua8/ri4fwVvRPuOzFQ2OBRsVvwZuqeQ==}
+    peerDependencies:
+      hono: '>=3.9.0'
+      valibot: '>=0.31.0 <1'
 
   '@hono/vite-cloudflare-pages@0.4.2':
     resolution: {integrity: sha512-fvSmWNtL7rMTa6tfj0dJNu0UStp8veb2r1BfutoKtJ6GaTzO1sR5ElQw9jIYo46oTBcx8+i/9+NzyGR56awtrQ==}
@@ -1984,6 +1996,9 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
+  valibot@0.36.0:
+    resolution: {integrity: sha512-CjF1XN4sUce8sBK9TixrDqFM7RwNkuXdJu174/AwmQUB62QbCQADg5lLe8ldBalFgtj1uKj+pKwDJiNo4Mn+eQ==}
+
   vite@5.3.3:
     resolution: {integrity: sha512-NPQdeCU0Dv2z5fu+ULotpuq5yfCS1BzKUIPhNbP3YBfAMGJXbt2nS+sbTFu+qchaqWTD+H3JK++nRwr6XIcp6A==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -2436,6 +2451,11 @@ snapshots:
   '@fastify/busboy@2.1.1': {}
 
   '@hono/node-server@1.12.0': {}
+
+  '@hono/valibot-validator@0.3.0(hono@4.4.13)(valibot@0.36.0)':
+    dependencies:
+      hono: 4.4.13
+      valibot: 0.36.0
 
   '@hono/vite-cloudflare-pages@0.4.2(hono@4.4.13)':
     dependencies:
@@ -3668,6 +3688,8 @@ snapshots:
       tslib: 2.6.3
 
   util-deprecate@1.0.2: {}
+
+  valibot@0.36.0: {}
 
   vite@5.3.3(@types/node@20.14.10):
     dependencies:

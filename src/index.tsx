@@ -1,15 +1,16 @@
+import { vValidator } from "@hono/valibot-validator";
 import { Hono } from "hono";
+import * as v from "valibot";
+import { AuthContext } from "./modules/auth/AuthContext";
+import { LoginPage } from "./modules/auth/LoginPage";
+import { RequestContext } from "./modules/common/RequestContext";
+import { Homepage } from "./modules/homepage/Homepage";
 import { renderer } from "./renderer";
-import { createAuthorizationUrl } from "./server/auth/session";
 import { handleAuthCallback } from "./server/auth/callback";
 import { authMiddleware } from "./server/auth/middleware";
-import { Homepage } from "./modules/homepage/Homepage";
+import { createAuthorizationUrl } from "./server/auth/session";
 import { drizzleMiddleware } from "./server/db/middleware";
-import { LoginPage } from "./modules/auth/LoginPage";
 import { paths } from "./utils/paths";
-import { AuthContext } from "./modules/auth/AuthContext";
-import { vValidator } from "@hono/valibot-validator";
-import * as v from "valibot";
 
 const app = new Hono();
 
@@ -38,9 +39,11 @@ app.get(
 		const { showDone } = context.req.valid("query");
 
 		return context.render(
-			<AuthContext.Provider value={{ session, user }}>
-				<Homepage showDone={showDone} />
-			</AuthContext.Provider>,
+			<RequestContext.Provider value={context}>
+				<AuthContext.Provider value={{ session, user }}>
+					<Homepage showDone={showDone} />
+				</AuthContext.Provider>
+			</RequestContext.Provider>,
 		);
 	},
 );

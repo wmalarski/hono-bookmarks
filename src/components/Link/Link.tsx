@@ -1,5 +1,5 @@
 import type { FC, JSX } from "hono/jsx";
-import { buttonRecipe, type ButtonVariants } from "../Button/Button.styles";
+import { type ButtonVariants, buttonRecipe } from "../Button/Button.styles";
 
 type LinkProps = JSX.IntrinsicElements["a"] & ButtonVariants;
 

@@ -1,10 +1,10 @@
 import type { Context } from "hono";
 import { getCookie, setCookie } from "hono/cookie";
-import { setBlankSessionCookie } from "./session";
-import { HTTPException } from "hono/http-exception";
 import { createMiddleware } from "hono/factory";
+import { HTTPException } from "hono/http-exception";
 import type { Session, User } from "lucia";
 import { getLucia } from "./lucia";
+import { setBlankSessionCookie } from "./session";
 
 export const authMiddleware = createMiddleware(async (context, next) => {
 	const lucia = getLucia(context);

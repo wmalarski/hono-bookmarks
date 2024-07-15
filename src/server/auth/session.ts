@@ -1,9 +1,9 @@
-import { generateCodeVerifier, generateState, type Tokens } from "arctic";
-import { verifyRequestOrigin } from "lucia";
-import { createOAuthAPIClient } from "masto";
+import { type Tokens, generateCodeVerifier, generateState } from "arctic";
 import type { Context } from "hono";
 import { getCookie, setCookie } from "hono/cookie";
 import type { CookieOptions } from "hono/utils/cookie";
+import { verifyRequestOrigin } from "lucia";
+import { createOAuthAPIClient } from "masto";
 import { getOAuth2Client } from "./lucia";
 
 const CODE_KEY = "code";

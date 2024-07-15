@@ -1,6 +1,6 @@
-import { createRestAPIClient } from "masto";
 import type { Tokens } from "arctic";
 import type { Context } from "hono";
+import { createRestAPIClient } from "masto";
 
 export const verifyMastoCredentials = (context: Context, tokens: Tokens) => {
 	const client = createRestAPIClient({

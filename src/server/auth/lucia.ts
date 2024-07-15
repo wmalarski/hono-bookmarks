@@ -1,10 +1,10 @@
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
+import type { Tokens } from "arctic";
+import type { InferSelectModel } from "drizzle-orm";
+import type { Context } from "hono";
 import { Lucia } from "lucia";
 import { OAuth2Client } from "oslo/oauth2";
-import type { InferSelectModel } from "drizzle-orm";
-import type { Tokens } from "arctic";
 import { sessionTable, userTable } from "../db/schema";
-import type { Context } from "hono";
 
 export const getLucia = (context: Context) => {
 	const adapter = new DrizzleSQLiteAdapter(

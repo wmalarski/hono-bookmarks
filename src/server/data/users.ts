@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import { userTable } from "../db/schema";
 import type { Context } from "hono";
+import { userTable } from "../db/schema";
 
 export const getUserByMastoId = (context: Context, id: string) => {
 	return context.var.db

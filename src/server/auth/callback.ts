@@ -1,9 +1,9 @@
-import type { Context } from "hono";
-import { setSessionCookie, validateAuthorizationCode } from "./session";
-import { HTTPException } from "hono/http-exception";
-import { verifyMastoCredentials } from "../masto/helpers";
-import { getUserByMastoId, insertUser } from "../data/users";
 import { OAuth2RequestError } from "arctic";
+import type { Context } from "hono";
+import { HTTPException } from "hono/http-exception";
+import { getUserByMastoId, insertUser } from "../data/users";
+import { verifyMastoCredentials } from "../masto/helpers";
+import { setSessionCookie, validateAuthorizationCode } from "./session";
 
 export const handleAuthCallback = async (context: Context) => {
 	try {

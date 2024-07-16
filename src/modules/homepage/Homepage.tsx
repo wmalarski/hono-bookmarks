@@ -3,6 +3,12 @@ import { useRequestContext } from "hono/jsx-renderer";
 import { findTags } from "../../server/data/tags";
 import { useAuthContext } from "../auth/AuthContext";
 import { Navbar } from "./Navbar";
+import { listMastoBookmarks } from "../../server/masto/helpers";
+import {
+	findBookmarks,
+	findBookmarksByMastoIds,
+} from "../../server/data/bookmarks";
+import { matchBookmarks } from "../../server/data/matchBookmarks";
 
 type HomepageProps = {
 	showDone: boolean;
@@ -13,17 +19,17 @@ export const Homepage: FC<HomepageProps> = async ({ showDone }) => {
 
 	const context = useRequestContext();
 
-	const { mastoBookmarks, minId, maxId } = await listMastoBookmarks(Astro, {
+	const { mastoBookmarks, minId, maxId } = await listMastoBookmarks(context, {
 		maxId: null,
 	});
 
 	const tags = findTags(context);
 
-	const bookmarksForMasto = findBookmarksByMastoIds(Astro, {
+	const bookmarksForMasto = findBookmarksByMastoIds(context, {
 		mastoBookmarks,
 	});
 
-	const bookmarksResult = findBookmarks(Astro, {
+	const bookmarksResult = findBookmarks(context, {
 		endDate: new Date(),
 		startDate: null,
 	});
@@ -38,7 +44,13 @@ export const Homepage: FC<HomepageProps> = async ({ showDone }) => {
 	return (
 		<main class="relative">
 			<Navbar />
-			<pre>{JSON.stringify({ session, user, tags }, null, 2)}</pre>
+			<pre>
+				{JSON.stringify(
+					{ session, user, tags, minId, maxId, matchedBookmarks },
+					null,
+					2,
+				)}
+			</pre>
 		</main>
 	);
 };

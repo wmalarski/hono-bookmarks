@@ -17,7 +17,8 @@
 				"noUndeclaredVariables": "error",
 				"noUnusedVariables": "error",
 				"useArrayLiterals": "error",
-				"useHookAtTopLevel": "error"
+				"useHookAtTopLevel": "error",
+				"useJsxKeyInIterable": "off"
 			},
 			"performance": {
 				"noReExportAll": "error"

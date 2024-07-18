@@ -9,6 +9,7 @@ import {
 	findBookmarksByMastoIds,
 } from "../../server/data/bookmarks";
 import { matchBookmarks } from "../../server/data/matchBookmarks";
+import { TagList } from "../tags/TagList";
 
 type HomepageProps = {
 	showDone: boolean;
@@ -44,13 +45,16 @@ export const Homepage: FC<HomepageProps> = async ({ showDone }) => {
 	return (
 		<main class="relative">
 			<Navbar />
-			<pre>
-				{JSON.stringify(
-					{ session, user, tags, minId, maxId, matchedBookmarks },
-					null,
-					2,
-				)}
-			</pre>
+			<div>
+				<pre>
+					{JSON.stringify(
+						{ session, user, tags, minId, maxId, matchedBookmarks },
+						null,
+						2,
+					)}
+				</pre>
+				<TagList tags={tags} />
+			</div>
 		</main>
 	);
 };

@@ -3,7 +3,6 @@ import { Hono } from "hono";
 import * as v from "valibot";
 import { AuthContext } from "./modules/auth/AuthContext";
 import { LoginPage } from "./modules/auth/LoginPage";
-import { RequestContext } from "./modules/common/RequestContext";
 import { Homepage } from "./modules/homepage/Homepage";
 import { renderer } from "./renderer";
 import { handleAuthCallback } from "./server/auth/callback";
@@ -39,11 +38,9 @@ app.get(
 		const { showDone } = context.req.valid("query");
 
 		return context.render(
-			<RequestContext.Provider value={context}>
-				<AuthContext.Provider value={{ session, user }}>
-					<Homepage showDone={showDone} />
-				</AuthContext.Provider>
-			</RequestContext.Provider>,
+			<AuthContext.Provider value={{ session, user }}>
+				<Homepage showDone={showDone} />
+			</AuthContext.Provider>,
 		);
 	},
 );

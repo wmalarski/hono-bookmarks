@@ -1,6 +1,8 @@
 import type { FC } from "hono/jsx";
 import { Button } from "../../components/Button/Button";
 import type { PreviewCard, Status } from "../../server/masto/types";
+import type { MatchBookmarksResult } from "../../server/data/matchBookmarks";
+import { BookmarkTag } from "./BookmarkTag";
 
 type MastoBookmarkCardProps = {
 	card: PreviewCard;
@@ -35,7 +37,8 @@ const MastoBookmarkItem: FC<MastoBookmarkItemProps> = ({ mastoBookmark }) => {
 					src={mastoBookmark.account.avatar_static}
 				/>
 			</div>
-			<div>{unsafeHTML(mastoBookmark.content)}</div>
+			{/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
+			<div dangerouslySetInnerHTML={{ __html: mastoBookmark.content }} />
 			{mastoBookmark.card?.image && (
 				<MastoBookmarkCard card={mastoBookmark.card} />
 			)}
@@ -83,11 +86,9 @@ export const BookmarkListItem: FC<BookmarkListItemProps> = ({ item }) => {
 			<span>{text}</span>
 			{assignedTags && assignedTags.length > 0 ? (
 				<ul>
-					{assignedTags.map(
-						({ tag, bookmarkTag }) => html`
-							<bookmark-tag .tag=${tag} .bookmarkTag=${bookmarkTag}></bookmark-tag>
-						`,
-					)}
+					{assignedTags.map(({ tag, bookmarkTag }) => (
+						<BookmarkTag tag={tag} bookmarkTag={bookmarkTag} />
+					))}
 				</ul>
 			) : null}
 			<BookmarkDoneCheckbox item={item} />

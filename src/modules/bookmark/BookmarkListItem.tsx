@@ -3,6 +3,10 @@ import { Button } from "../../components/Button/Button";
 import type { PreviewCard, Status } from "../../server/masto/types";
 import type { MatchBookmarksResult } from "../../server/data/matchBookmarks";
 import { BookmarkTag } from "./BookmarkTag";
+import { BookmarkDoneCheckbox } from "./BookmarkDoneCheckbox";
+import { BookmarkTagsForm } from "./BookmarkTagsForm";
+import type { InferSelectModel } from "drizzle-orm";
+import type { tagTable } from "../../server/db/schema";
 
 type MastoBookmarkCardProps = {
 	card: PreviewCard;
@@ -61,27 +65,33 @@ const RemoveBookmarkButton: FC<RemoveBookmarkButtonProps> = () => {
 
 type BookmarkListItemProps = {
 	item: MatchBookmarksResult;
+	tags: InferSelectModel<typeof tagTable>[];
+	tagsMap: Map<string, InferSelectModel<typeof tagTable>>;
 };
 
-export const BookmarkListItem: FC<BookmarkListItemProps> = ({ item }) => {
+export const BookmarkListItem: FC<BookmarkListItemProps> = ({
+	item,
+	tags,
+	tagsMap,
+}) => {
 	const bookmark = item.bookmark;
 	const mastoCard = item.mastoBookmark?.card;
 
 	const title = bookmark?.title ?? mastoCard?.title ?? "";
 	const text = bookmark?.content ?? mastoCard?.description ?? "";
-	const url = bookmark?.url ?? item.mastoBookmark?.uri ?? "";
 
 	const assignedTags = item.bookmarkTags.flatMap((bookmarkTag) => {
-		const tag = tagsContext.tagsMap.get(bookmarkTag.tagId);
+		const tag = tagsMap.get(bookmarkTag.tagId);
 		return tag ? [{ tag, bookmarkTag }] : [];
 	});
 
 	const onShareClick = () => {
-		//
+		// const url = bookmark?.url ?? item.mastoBookmark?.uri ?? "";
+		// window.navigator.share({ url, text, title });
 	};
 
 	return (
-		<div class="flex flex-col gap-2 border-b-[1px] border-b-base-content p-4">
+		<li class="flex flex-col gap-2 border-b-[1px] border-b-base-content p-4">
 			<strong>{title}</strong>
 			<span>{text}</span>
 			{assignedTags && assignedTags.length > 0 ? (
@@ -92,7 +102,7 @@ export const BookmarkListItem: FC<BookmarkListItemProps> = ({ item }) => {
 				</ul>
 			) : null}
 			<BookmarkDoneCheckbox item={item} />
-			<BookmarkTagsForm item={item} />
+			<BookmarkTagsForm item={item} tags={tags} />
 			{!item.mastoBookmark && item.bookmark && (
 				<RemoveBookmarkButton item={item} />
 			)}
@@ -102,6 +112,6 @@ export const BookmarkListItem: FC<BookmarkListItemProps> = ({ item }) => {
 			{item.mastoBookmark && (
 				<MastoBookmarkItem mastoBookmark={item.mastoBookmark} />
 			)}
-		</div>
+		</li>
 	);
 };

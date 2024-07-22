@@ -1,7 +1,6 @@
 import type { FC } from "hono/jsx";
 import { useRequestContext } from "hono/jsx-renderer";
 import { findTags } from "../../server/data/tags";
-import { useAuthContext } from "../auth/AuthContext";
 import { Navbar } from "./Navbar";
 import { listMastoBookmarks } from "../../server/masto/helpers";
 import {
@@ -10,14 +9,13 @@ import {
 } from "../../server/data/bookmarks";
 import { matchBookmarks } from "../../server/data/matchBookmarks";
 import { TagList } from "../tags/TagList";
+import { BookmarkList } from "../bookmark/BookmarkList";
 
 type HomepageProps = {
 	showDone: boolean;
 };
 
 export const Homepage: FC<HomepageProps> = async ({ showDone }) => {
-	const { session, user } = useAuthContext();
-
 	const context = useRequestContext();
 
 	const { mastoBookmarks, minId, maxId } = await listMastoBookmarks(context, {
@@ -25,6 +23,7 @@ export const Homepage: FC<HomepageProps> = async ({ showDone }) => {
 	});
 
 	const tags = findTags(context);
+	const tagsMap = new Map(tags.map((tag) => [tag.id, tag]));
 
 	const bookmarksForMasto = findBookmarksByMastoIds(context, {
 		mastoBookmarks,
@@ -46,13 +45,13 @@ export const Homepage: FC<HomepageProps> = async ({ showDone }) => {
 		<main class="relative">
 			<Navbar />
 			<div>
-				<pre>
-					{JSON.stringify(
-						{ session, user, tags, minId, maxId, matchedBookmarks },
-						null,
-						2,
-					)}
-				</pre>
+				<BookmarkList
+					tags={tags}
+					bookmarks={matchedBookmarks}
+					tagsMap={tagsMap}
+					maxId={maxId}
+					minId={minId}
+				/>
 				<TagList tags={tags} />
 			</div>
 		</main>

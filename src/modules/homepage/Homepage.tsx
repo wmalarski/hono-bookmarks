@@ -10,6 +10,7 @@ import {
 import { matchBookmarks } from "../../server/data/matchBookmarks";
 import { TagList } from "../tags/TagList";
 import { BookmarkList } from "../bookmark/BookmarkList";
+import { BookmarkFilters } from "../bookmark/BookmarkFilters";
 
 type HomepageProps = {
 	showDone: boolean;
@@ -42,9 +43,9 @@ export const Homepage: FC<HomepageProps> = async ({ showDone }) => {
 	});
 
 	return (
-		<main class="relative">
+		<main class="">
 			<Navbar />
-			<div>
+			<div class="mx-auto my-0 grid max-w-5xl grid-cols-[2fr_1fr]">
 				<BookmarkList
 					tags={tags}
 					bookmarks={matchedBookmarks}
@@ -52,7 +53,10 @@ export const Homepage: FC<HomepageProps> = async ({ showDone }) => {
 					maxId={maxId}
 					minId={minId}
 				/>
-				<TagList tags={tags} />
+				<aside class="sticky top-0 block border-x-[1px] border-x-base-content">
+					<BookmarkFilters showDone={showDone} />
+					<TagList tags={tags} />
+				</aside>
 			</div>
 		</main>
 	);

@@ -18,7 +18,7 @@ export const BookmarkTagsForm: FC<BookmarkTagsFormProps> = ({ item, tags }) => {
 
 	return (
 		<form action="/">
-			<input type="hidden" name="kind" value="add-bookmark-tag" />
+			<input type="hidden" name="kind" value="create-bookmark-tag" />
 			<input type="hidden" name="bookmarkId" value={item.bookmark?.id} />
 			<input
 				type="hidden"

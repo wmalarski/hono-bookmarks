@@ -13,6 +13,7 @@ export const TagsListItem: FC<TagsListItemProps> = ({ tag }) => {
 			<span>{tag.name}</span>
 			<form action="/" method="post">
 				<input type="hidden" name="kind" value="delete-tag" />
+				<input type="hidden" name="tagId" value={tag.id} />
 				<Button type="submit">Delete</Button>
 			</form>
 		</li>

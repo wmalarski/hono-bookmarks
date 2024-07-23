@@ -13,7 +13,7 @@ export const BookmarkTag: FC<BookmarkTagProps> = ({ bookmarkTag, tag }) => {
 		<li>
 			<span>{tag.name}</span>
 			<form action="/" method="post">
-				<input type="hidden" value="remove-bookmark-tag" name="kind" />
+				<input type="hidden" value="delete-bookmark-tag" name="kind" />
 				<input type="hidden" value={bookmarkTag.id} name="bookmarkTagId" />
 				<Button type="submit">Remove</Button>
 			</form>

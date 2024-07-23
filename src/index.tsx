@@ -10,6 +10,8 @@ import { authMiddleware } from "./server/auth/middleware";
 import { createAuthorizationUrl } from "./server/auth/session";
 import { drizzleMiddleware } from "./server/db/middleware";
 import { paths } from "./utils/paths";
+import { createTag, deleteTag } from "./server/data/tags";
+import { deleteBookmarkTag } from "./server/data/bookmarkTags";
 
 const app = new Hono();
 
@@ -42,6 +44,69 @@ app.get(
 				<Homepage showDone={showDone} />
 			</AuthContext.Provider>,
 		);
+	},
+);
+
+app.post(
+	"/",
+	vValidator(
+		"form",
+		v.union([
+			v.object({
+				kind: v.literal("create-tag"),
+				name: v.pipe(v.string(), v.minLength(1)),
+			}),
+			v.object({
+				kind: v.literal("delete-tag"),
+				tagId: v.pipe(v.string(), v.minLength(1)),
+			}),
+			v.object({
+				kind: v.literal("create-bookmark-tag"),
+				bookmarkId: v.pipe(v.string(), v.minLength(1)),
+				mastoBookmarkId: v.pipe(v.string(), v.minLength(1)),
+				tagIds: v.array(v.string()),
+			}),
+			v.object({
+				kind: v.literal("delete-bookmark-tag"),
+				bookmarkTagId: v.pipe(v.string(), v.minLength(1)),
+			}),
+			v.object({
+				kind: v.literal("delete-bookmark"),
+				bookmarkId: v.pipe(v.string(), v.minLength(1)),
+			}),
+			v.object({
+				kind: v.literal("done-change"),
+				bookmarkId: v.optional(v.pipe(v.string(), v.minLength(1))),
+				mastoBookmarkId: v.optional(v.pipe(v.string(), v.minLength(1))),
+				done: v.boolean(),
+			}),
+		]),
+	),
+	(context) => {
+		const { user, session } = context.var;
+
+		if (!user || !session) {
+			return context.redirect(paths.login);
+		}
+
+		const data = context.req.valid("form");
+
+		switch (data.kind) {
+			case "create-tag": {
+				createTag(context, data);
+				break;
+			}
+			case "delete-tag": {
+				deleteTag(context, data);
+				break;
+			}
+			case "delete-bookmark-tag": {
+				deleteBookmarkTag(context, data);
+				break;
+			}
+		}
+
+		return context.redirect("/");
 	},
 );
 

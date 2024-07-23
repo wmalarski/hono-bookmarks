@@ -6,7 +6,7 @@ import { BookmarkTag } from "./BookmarkTag";
 import { BookmarkDoneCheckbox } from "./BookmarkDoneCheckbox";
 import { BookmarkTagsForm } from "./BookmarkTagsForm";
 import type { InferSelectModel } from "drizzle-orm";
-import type { tagTable } from "../../server/db/schema";
+import type { bookmarkTable, tagTable } from "../../server/db/schema";
 
 type MastoBookmarkCardProps = {
 	card: PreviewCard;
@@ -51,13 +51,14 @@ const MastoBookmarkItem: FC<MastoBookmarkItemProps> = ({ mastoBookmark }) => {
 };
 
 type RemoveBookmarkButtonProps = {
-	item: MatchBookmarksResult;
+	bookmark: InferSelectModel<typeof bookmarkTable>;
 };
 
-const RemoveBookmarkButton: FC<RemoveBookmarkButtonProps> = () => {
+const RemoveBookmarkButton: FC<RemoveBookmarkButtonProps> = ({ bookmark }) => {
 	return (
 		<form action="/" method="post">
-			<input type="hidden" name="kind" value="remove-bookmark" />
+			<input type="hidden" name="kind" value="delete-bookmark" />
+			<input type="hidden" name="bookmarkId" value={bookmark.id} />
 			<Button type="submit">Remove</Button>
 		</form>
 	);
@@ -104,7 +105,7 @@ export const BookmarkListItem: FC<BookmarkListItemProps> = ({
 			<BookmarkDoneCheckbox item={item} />
 			<BookmarkTagsForm item={item} tags={tags} />
 			{!item.mastoBookmark && item.bookmark && (
-				<RemoveBookmarkButton item={item} />
+				<RemoveBookmarkButton bookmark={item.bookmark} />
 			)}
 			<Button type="button" onClick={onShareClick}>
 				Share

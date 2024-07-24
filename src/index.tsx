@@ -11,7 +11,15 @@ import { createAuthorizationUrl } from "./server/auth/session";
 import { drizzleMiddleware } from "./server/db/middleware";
 import { paths } from "./utils/paths";
 import { createTag, deleteTag } from "./server/data/tags";
-import { deleteBookmarkTag } from "./server/data/bookmarkTags";
+import {
+	createBookmarkTags,
+	deleteBookmarkTag,
+} from "./server/data/bookmarkTags";
+import {
+	deleteBookmark,
+	findOrCreateBookmark,
+	updateBookmark,
+} from "./server/data/bookmarks";
 
 const app = new Hono();
 
@@ -102,6 +110,46 @@ app.post(
 			}
 			case "delete-bookmark-tag": {
 				deleteBookmarkTag(context, data);
+				break;
+			}
+			case "create-bookmark-tag": {
+				const bookmark = findOrCreateBookmark(context, {
+					content: null,
+					title: null,
+					url: null,
+					mastoBookmarkId: data.mastoBookmarkId ?? null,
+					priority: 0,
+					done: false,
+					id: data.bookmarkId,
+				});
+
+				createBookmarkTags(context, {
+					bookmarkId: data.bookmarkId ?? bookmark?.id,
+					tagIds: data.tagIds,
+				});
+				break;
+			}
+			case "delete-bookmark": {
+				deleteBookmark(context, data);
+				break;
+			}
+			case "done-change": {
+				const bookmark = findOrCreateBookmark(context, {
+					mastoBookmarkId: data.mastoBookmarkId ?? null,
+					content: null,
+					title: null,
+					url: null,
+					done: data.done,
+					priority: 0,
+					id: data.bookmarkId,
+				});
+
+				updateBookmark(context, {
+					bookmarkId: bookmark.id,
+					content: bookmark.content,
+					done: data.done,
+					priority: bookmark.priority,
+				});
 				break;
 			}
 		}

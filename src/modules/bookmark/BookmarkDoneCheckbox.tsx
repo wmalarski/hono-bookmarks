@@ -19,7 +19,7 @@ export const BookmarkDoneCheckbox: FC<BookmarkDoneCheckboxProps> = ({
 				value={item.mastoBookmark?.id}
 			/>
 			<label>
-				<Checkbox type="checkbox" name="done" checked={item.bookmark?.done} />
+				<Checkbox name="done" checked={item.bookmark?.done} />
 				Done
 			</label>
 		</form>

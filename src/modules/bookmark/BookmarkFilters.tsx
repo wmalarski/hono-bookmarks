@@ -10,7 +10,7 @@ export const BookmarkFilters: FC<BookmarkFiltersProps> = ({ showDone }) => {
 	return (
 		<form class="flex flex-col gap-4" method="get">
 			<label>
-				<Checkbox name="done" type="checkbox" checked={showDone} />
+				<Checkbox name="done" checked={showDone} />
 				Show Done
 			</label>
 			<Button type="submit">Filter</Button>

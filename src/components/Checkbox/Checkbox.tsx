@@ -13,7 +13,11 @@ export const Checkbox: FC<CheckboxProps> = ({
 		<input
 			type="checkbox"
 			{...props}
-			class={checkboxRecipe({ className, color, size })}
+			class={checkboxRecipe({
+				className,
+				color,
+				size,
+			})}
 		/>
 	);
 };

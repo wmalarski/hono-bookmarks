@@ -77,4 +77,8 @@ app.get("/login/mastodon/callback", async (context) => {
 	return handleAuthCallback(context);
 });
 
+app.get("/api/bookmarks", async (context) => {
+	return handleAuthCallback(context);
+});
+
 export default app;

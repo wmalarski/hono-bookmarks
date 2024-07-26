@@ -3,6 +3,7 @@ import type { MatchBookmarksResult } from "../../server/data/matchBookmarks";
 import type { InferSelectModel } from "drizzle-orm";
 import type { tagTable } from "../../server/db/schema";
 import { Button } from "../../components/Button/Button";
+import { Select } from "../../components/Select/Select";
 
 type BookmarkTagsFormProps = {
 	item: MatchBookmarksResult;
@@ -27,14 +28,14 @@ export const BookmarkTagsForm: FC<BookmarkTagsFormProps> = ({ item, tags }) => {
 			/>
 			<label>
 				Tags
-				<select name="tag">
+				<Select name="tag">
 					<option value="" selected>
 						Please choose
 					</option>
 					{unassignedTags.map((tag) => (
 						<option value={tag.id}>{tag.name}</option>
 					))}
-				</select>
+				</Select>
 			</label>
 			<Button type="submit">Save</Button>
 		</form>

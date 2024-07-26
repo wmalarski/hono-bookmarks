@@ -1,6 +1,8 @@
 import type { FC } from "hono/jsx";
 import type { MatchBookmarksResult } from "../../server/data/matchBookmarks";
 import { Checkbox } from "../../components/Checkbox/Checkbox";
+import { FormControl } from "../../components/FormControl/FormControl";
+import { Label, LabelText } from "../../components/Label/Label";
 
 type BookmarkDoneCheckboxProps = {
 	item: MatchBookmarksResult;
@@ -18,10 +20,12 @@ export const BookmarkDoneCheckbox: FC<BookmarkDoneCheckboxProps> = ({
 				name="mastoBookmarkId"
 				value={item.mastoBookmark?.id}
 			/>
-			<label>
+			<FormControl>
 				<Checkbox name="done" checked={item.bookmark?.done} />
-				Done
-			</label>
+				<Label>
+					<LabelText>Done</LabelText>
+				</Label>
+			</FormControl>
 		</form>
 	);
 };

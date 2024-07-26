@@ -4,6 +4,8 @@ import type { InferSelectModel } from "drizzle-orm";
 import type { tagTable } from "../../server/db/schema";
 import { Button } from "../../components/Button/Button";
 import { Select } from "../../components/Select/Select";
+import { FormControl } from "../../components/FormControl/FormControl";
+import { Label, LabelText } from "../../components/Label/Label";
 
 type BookmarkTagsFormProps = {
 	item: MatchBookmarksResult;
@@ -26,8 +28,10 @@ export const BookmarkTagsForm: FC<BookmarkTagsFormProps> = ({ item, tags }) => {
 				name="mastoBookmarkId"
 				value={item.mastoBookmark?.id}
 			/>
-			<label>
-				Tags
+			<FormControl>
+				<Label>
+					<LabelText>Tags</LabelText>
+				</Label>
 				<Select name="tag">
 					<option value="" selected>
 						Please choose
@@ -36,7 +40,7 @@ export const BookmarkTagsForm: FC<BookmarkTagsFormProps> = ({ item, tags }) => {
 						<option value={tag.id}>{tag.name}</option>
 					))}
 				</Select>
-			</label>
+			</FormControl>
 			<Button type="submit">Save</Button>
 		</form>
 	);

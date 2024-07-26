@@ -3,6 +3,7 @@ import type { bookmarkTagTable, tagTable } from "../../server/db/schema";
 import type { FC } from "hono/jsx";
 import { Button } from "../../components/Button/Button";
 import { Badge } from "../../components/Badge/Badge";
+import { XIcon } from "../../components/Icons/XIcon";
 
 type BookmarkTagProps = {
 	bookmarkTag: InferSelectModel<typeof bookmarkTagTable>;
@@ -18,7 +19,7 @@ export const BookmarkTag: FC<BookmarkTagProps> = ({ bookmarkTag, tag }) => {
 					<input type="hidden" value="delete-bookmark-tag" name="kind" />
 					<input type="hidden" value={bookmarkTag.id} name="bookmarkTagId" />
 					<Button type="submit" aria-label="Remove">
-						<span aria-hidden="true">x</span>
+						<XIcon />
 					</Button>
 				</form>
 			</Badge>

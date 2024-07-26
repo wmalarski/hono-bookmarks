@@ -1,6 +1,7 @@
 import { Button } from "../../components/Button/Button";
 import { FormControl } from "../../components/FormControl/FormControl";
 import { Label, LabelText } from "../../components/Label/Label";
+import { TextField } from "../../components/TextField";
 
 export const CreateTagForm = () => {
 	return (
@@ -10,7 +11,7 @@ export const CreateTagForm = () => {
 				<Label>
 					<LabelText>New tag</LabelText>
 				</Label>
-				<input name="name" autofocus autocomplete="off" />
+				<TextField name="name" autofocus autocomplete="off" />
 			</FormControl>
 			<Button type="submit">Save</Button>
 		</form>

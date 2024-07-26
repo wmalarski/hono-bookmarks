@@ -1,7 +1,7 @@
 import type { VariantProps } from "class-variance-authority";
 import { twCva } from "../utils/twCva";
 
-export const labelClass = twCva("label");
+export const labelClass = twCva("label gap-2");
 
 export type LabelVariants = VariantProps<typeof labelClass>;
 
@@ -12,7 +12,7 @@ export const labelTextClass = twCva("", {
 	variants: {
 		alt: {
 			false: "label-text",
-			true: "label-text-alt",
+			true: "label-text-alt pt-2",
 		},
 	},
 });

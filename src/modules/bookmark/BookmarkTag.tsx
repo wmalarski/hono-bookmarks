@@ -1,9 +1,8 @@
 import type { InferSelectModel } from "drizzle-orm";
 import type { bookmarkTagTable, tagTable } from "../../server/db/schema";
 import type { FC } from "hono/jsx";
-import { Button } from "../../components/Button/Button";
 import { Badge } from "../../components/Badge/Badge";
-import { XIcon } from "../../components/Icons/XIcon";
+import { DeleteBookmarkTagDialog } from "./DeleteBookmarkTagDialog";
 
 type BookmarkTagProps = {
 	bookmarkTag: InferSelectModel<typeof bookmarkTagTable>;
@@ -15,13 +14,7 @@ export const BookmarkTag: FC<BookmarkTagProps> = ({ bookmarkTag, tag }) => {
 		<li>
 			<Badge>
 				{tag.name}
-				<form action="/" method="post">
-					<input type="hidden" value="delete-bookmark-tag" name="kind" />
-					<input type="hidden" value={bookmarkTag.id} name="bookmarkTagId" />
-					<Button type="submit" aria-label="Remove">
-						<XIcon />
-					</Button>
-				</form>
+				<DeleteBookmarkTagDialog bookmarkTag={bookmarkTag} />
 			</Badge>
 		</li>
 	);

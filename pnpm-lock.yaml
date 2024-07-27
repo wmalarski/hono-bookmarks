@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@hono/valibot-validator':
         specifier: ^0.3.0
-        version: 0.3.0(hono@4.5.1)(valibot@0.36.0)
+        version: 0.3.0(hono@4.5.2)(valibot@0.36.0)
       '@lucia-auth/adapter-drizzle':
         specifier: ^1.0.7
         version: 1.0.7(lucia@3.2.0)
@@ -30,8 +30,8 @@ importers:
         specifier: ^0.32.1
         version: 0.32.1(@cloudflare/workers-types@4.20240725.0)(@types/better-sqlite3@7.6.11)(better-sqlite3@11.1.2)
       hono:
-        specifier: ^4.5.1
-        version: 4.5.1
+        specifier: ^4.5.2
+        version: 4.5.2
       lucia:
         specifier: ^3.2.0
         version: 3.2.0
@@ -62,10 +62,10 @@ importers:
         version: 4.20240725.0
       '@hono/vite-cloudflare-pages':
         specifier: ^0.4.2
-        version: 0.4.2(hono@4.5.1)
+        version: 0.4.2(hono@4.5.2)
       '@hono/vite-dev-server':
         specifier: ^0.13.1
-        version: 0.13.1(hono@4.5.1)
+        version: 0.13.1(hono@4.5.2)
       '@types/better-sqlite3':
         specifier: ^7.6.11
         version: 7.6.11
@@ -79,8 +79,8 @@ importers:
         specifier: ^5.3.5
         version: 5.3.5(@types/node@20.14.10)
       wrangler:
-        specifier: ^3.67.0
-        version: 3.67.0(@cloudflare/workers-types@4.20240725.0)
+        specifier: ^3.67.1
+        version: 3.67.1(@cloudflare/workers-types@4.20240725.0)
 
 packages:
 
@@ -1541,8 +1541,8 @@ packages:
   header-case@2.0.4:
     resolution: {integrity: sha512-H/vuk5TEEVZwrR0lp2zed9OCo1uAILMlx0JEMgC26rzyJJ3N1v6XkwHHXJQdR2doSjcGPM6OKPYoJgf0plJ11Q==}
 
-  hono@4.5.1:
-    resolution: {integrity: sha512-6q8AugoWG5wlrjdGG8OFFiqEsPlPGjODjUik48sEJeko4Tae1UsLS2vUiYHLEJx1gJvOZa4BWkQC+urwDmkEvQ==}
+  hono@4.5.2:
+    resolution: {integrity: sha512-93P8XEALrHAUGRZoqXs8MDL3w9mDgRpbW9Sy5x4LS7srg78bKUw7EGynxze+Ft1e/rLGmDAbxeSTMu6dHUSRDw==}
     engines: {node: '>=16.0.0'}
 
   ieee754@1.2.1:
@@ -1648,8 +1648,8 @@ packages:
     engines: {node: '>=16.13'}
     hasBin: true
 
-  miniflare@3.20240718.0:
-    resolution: {integrity: sha512-TKgSeyqPBeT8TBLxbDJOKPWlq/wydoJRHjAyDdgxbw59N6wbP8JucK6AU1vXCfu21eKhrEin77ssXOpbfekzPA==}
+  miniflare@3.20240718.1:
+    resolution: {integrity: sha512-mn3MjGnpgYvarCRTfz4TQyVyY8yW0zz7f8LOAPVai78IGC/lcVcyskZcuIr7Zovb2i+IERmmsJAiEPeZHIIKbA==}
     engines: {node: '>=16.13'}
     hasBin: true
 
@@ -2077,8 +2077,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@3.67.0:
-    resolution: {integrity: sha512-elun6p9rAmGr/CtnCixhUXWeKT+LnFbHDsLLizgAlFJbsgCPV/O1if7uMjTGD/fUJNXrwbTVRpxvInz5X9gE2Q==}
+  wrangler@3.67.1:
+    resolution: {integrity: sha512-lLVJxq/OZMfntvZ79WQJNC1OKfxOCs6PLfogqDBuPFEQ3L/Mwqvd9IZ0bB8ahrwUN/K3lSdDPXynk9HfcGZxVw==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
@@ -2507,19 +2507,19 @@ snapshots:
 
   '@hono/node-server@1.12.0': {}
 
-  '@hono/valibot-validator@0.3.0(hono@4.5.1)(valibot@0.36.0)':
+  '@hono/valibot-validator@0.3.0(hono@4.5.2)(valibot@0.36.0)':
     dependencies:
-      hono: 4.5.1
+      hono: 4.5.2
       valibot: 0.36.0
 
-  '@hono/vite-cloudflare-pages@0.4.2(hono@4.5.1)':
+  '@hono/vite-cloudflare-pages@0.4.2(hono@4.5.2)':
     dependencies:
-      hono: 4.5.1
+      hono: 4.5.2
 
-  '@hono/vite-dev-server@0.13.1(hono@4.5.1)':
+  '@hono/vite-dev-server@0.13.1(hono@4.5.2)':
     dependencies:
       '@hono/node-server': 1.12.0
-      hono: 4.5.1
+      hono: 4.5.2
       miniflare: 3.20240701.0
       minimatch: 9.0.5
     transitivePeerDependencies:
@@ -3209,7 +3209,7 @@ snapshots:
       capital-case: 1.0.4
       tslib: 2.6.3
 
-  hono@4.5.1: {}
+  hono@4.5.2: {}
 
   ieee754@1.2.1: {}
 
@@ -3320,7 +3320,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  miniflare@3.20240718.0:
+  miniflare@3.20240718.1:
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       acorn: 8.12.1
@@ -3794,7 +3794,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20240718.0
       '@cloudflare/workerd-windows-64': 1.20240718.0
 
-  wrangler@3.67.0(@cloudflare/workers-types@4.20240725.0):
+  wrangler@3.67.1(@cloudflare/workers-types@4.20240725.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
       '@esbuild-plugins/node-globals-polyfill': 0.2.3(esbuild@0.17.19)
@@ -3803,7 +3803,7 @@ snapshots:
       chokidar: 3.6.0
       date-fns: 3.6.0
       esbuild: 0.17.19
-      miniflare: 3.20240718.0
+      miniflare: 3.20240718.1
       nanoid: 3.3.7
       path-to-regexp: 6.2.2
       resolve: 1.22.8
